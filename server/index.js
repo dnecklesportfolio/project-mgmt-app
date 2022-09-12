@@ -5,7 +5,9 @@ const schema = require("./schema/schema");
 const connectDB = require("./config/db");
 const port = process.env.PORT || 5000;
 const app = express();
-
+const cors = require("cors");
+connectDB();
+app.use(cors())
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -13,9 +15,6 @@ app.use(
     graphiql: process.env.NODE_ENV === "development",
   })
 );
-
-connectDB();
-
 app.listen(port, () => {
   console.log("server is running on port ", port);
 });
