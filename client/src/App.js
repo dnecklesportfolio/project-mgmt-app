@@ -1,8 +1,10 @@
 import Header from "./components/Header.jsx";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-import Clients from "./components/Clients";
-import AddClientModal from './components/AddClientModal'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import NotFound from "./pages/NotFound";
+import Project from "./pages/Project"
 
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 /**
  *setup the variable to hold ApolloClient uri and cache
  *then create Apollo provider and wrap everything around it,
@@ -36,11 +38,16 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
-        <Header />
-        <div className="container">
-        <AddClientModal/>
-          <Clients />
-        </div>
+        <Router>
+          <Header />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path='/projects/:id' element={<Project/>}/>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </Router>
       </ApolloProvider>
     </>
   );
